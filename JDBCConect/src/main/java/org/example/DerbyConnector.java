@@ -17,6 +17,9 @@ public class DerbyConnector {
             Connection conn = DriverManager.getConnection(uri);
 
             //creo tabla
+
+          ///////// ACA AÑADO VALIDACION DE SI NO EXISTE CREAR Ó LUEGO DE LA PRIMER EJECUCIÓN COMENTO LA CREACIÓN Y ADD DE PERSONAS
+
             /*try{
                 createTables(conn);
                 System.out.println("Tabla creada");
