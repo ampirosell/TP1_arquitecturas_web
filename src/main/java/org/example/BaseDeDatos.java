@@ -2,9 +2,11 @@ package org.example;
 
 import java.sql.*;
 
-public class DerbyConnector {
+public class BaseDeDatos {
+
     public static void main(String[] args) {
-        String driver = "org.apache.derby.jdbc.EmbeddedDriver";
+
+        String driver = "com.mysql.jdbc.Driver";
         try{
             Class.forName(driver).getDeclaredConstructor().newInstance();
         } catch (Exception e) {
@@ -12,15 +14,19 @@ public class DerbyConnector {
             e.printStackTrace();
             System.exit(1);
         }
-        String uri = "jdbc:derby:MyDerbyDb;create=true";
+        String uri = "jdbc:mysql://localhost:3306/exampleDB";
         try {
-            Connection conn = DriverManager.getConnection(uri);
+            Connection conn = DriverManager.getConnection(uri,"root","password");
+
+            //setteo auto commit en falso para que no tire error de versiones
+            conn.setAutoCommit(false);
+
 
             //creo tabla
 
-          ///////// ACA AÑADO VALIDACION DE SI NO EXISTE CREAR Ó LUEGO DE LA PRIMER EJECUCIÓN COMENTO LA CREACIÓN Y ADD DE PERSONAS
+            ///////// ACA AÑADO VALIDACION DE SI NO EXISTE CREAR Ó LUEGO DE LA PRIMER EJECUCIÓN COMENTO LA CREACIÓN Y ADD DE PERSONAS
 
-            /*try{
+            try{
                 createTables(conn);
                 System.out.println("Tabla creada");
             } catch (Exception e) {
@@ -40,7 +46,7 @@ public class DerbyConnector {
                 System.out.println("Error ejecutando "+e.getMessage());
                 e.printStackTrace();
                 System.exit(4);
-            }*/
+            }
 
             ResultSet rs= null;
             //hago select
@@ -96,4 +102,5 @@ public class DerbyConnector {
         conn.prepareStatement(table).execute();
         conn.commit();
     }
+
 }
